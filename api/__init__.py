@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 # flake8: noqa
 
-# import apis into api package
+# import apis into api package etc
 from openapi_client.api.bots_api import BotsApi
 from openapi_client.api.chats_api import ChatsApi
 from openapi_client.api.messages_api import MessagesApi
