@@ -31,20 +31,23 @@ class FileAttachmentPayload(object):
                             and the value is json key in definition.
     """
     openapi_types = {
-        'file_id': 'int'
+        'file_id': 'int',
+        'url': 'str',
     }
 
     attribute_map = {
-        'file_id': 'fileId'
+        'file_id': 'fileId',
+        'url': 'url',
     }
 
-    def __init__(self, file_id=None):  # noqa: E501
+    def __init__(self, file_id=None, url=None):  # noqa: E501
         """FileAttachmentPayload - a model defined in OpenAPI"""  # noqa: E501
 
         self._file_id = None
         self.discriminator = None
 
         self.file_id = file_id
+        self.url = url
 
     @property
     def file_id(self):
@@ -70,6 +73,28 @@ class FileAttachmentPayload(object):
             raise ValueError("Invalid value for `file_id`, must not be `None`")  # noqa: E501
 
         self._file_id = file_id
+
+    @property
+    def url(self):
+        """Gets the url of this FileAttachmentPayload.  # noqa: E501
+
+        Identifier of uploaded file  # noqa: E501
+
+        :return: The url of this FileAttachmentPayload.  # noqa: E501
+        :rtype: str
+        """
+        return self._url
+
+    @url.setter
+    def url(self, url):
+        """Sets the url of this FileAttachmentPayload.
+
+        Identifier of uploaded file  # noqa: E501
+
+        :param url: The url of this FileAttachmentPayload.  # noqa: E501
+        :type: str
+        """
+        self._url = url
 
     def to_dict(self):
         """Returns the model properties as a dict"""
