@@ -424,7 +424,7 @@ class MessagesApi(object):
             query_params.append(('chat_id', local_var_params['chat_id']))  # noqa: E501
         if 'message_ids' in local_var_params:
             query_params.append(('message_ids', local_var_params['message_ids']))  # noqa: E501
-            collection_formats['message_ids'] = 'multi'  # noqa: E501
+            collection_formats['message_ids'] = 'csv'  # noqa: E501
         if '_from' in local_var_params:
             query_params.append(('from', local_var_params['_from']))  # noqa: E501
         if 'to' in local_var_params:
