@@ -39,6 +39,8 @@ class UserAddedToChatUpdate(Update):
     }
 
     attribute_map = {
+        'update_type': 'update_type',
+        'timestamp': 'timestamp',
         'chat_id': 'chat_id',
         'user': 'user',
         'inviter_id': 'inviter_id'
