@@ -199,8 +199,8 @@ class MessagesApi(object):
                 local_var_params['message_id'] is None):
             raise ValueError("Missing the required parameter `message_id` when calling `delete_message`")  # noqa: E501
 
-        if 'message_id' in local_var_params and not re.search('mid\\.[a-z0-9]{32}', str(local_var_params['message_id'])):  # noqa: E501
-            raise ValueError("Invalid value for parameter `message_id` when calling `delete_message`, must conform to the pattern `/mid\\.[a-z0-9]{32}/`")  # noqa: E501
+        # if 'message_id' in local_var_params and not re.search('mid\\.[a-z0-9]{32}', str(local_var_params['message_id'])):  # noqa: E501
+        #     raise ValueError("Invalid value for parameter `message_id` when calling `delete_message`, must conform to the pattern `/mid\\.[a-z0-9]{32}/`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}
@@ -303,8 +303,8 @@ class MessagesApi(object):
                 local_var_params['new_message_body'] is None):
             raise ValueError("Missing the required parameter `new_message_body` when calling `edit_message`")  # noqa: E501
 
-        if 'message_id' in local_var_params and not re.search(r'mid\.[a-z0-9]{32}', local_var_params['message_id']):  # noqa: E501
-            raise ValueError("Invalid value for parameter `message_id` when calling `edit_message`, must conform to the pattern `/mid\\.[a-z0-9]{32}/`")  # noqa: E501
+        # if 'message_id' in local_var_params and not re.search(r'mid\.[a-z0-9]{32}', local_var_params['message_id']):  # noqa: E501
+        #     raise ValueError("Invalid value for parameter `message_id` when calling `edit_message`, must conform to the pattern `/mid\\.[a-z0-9]{32}/`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}

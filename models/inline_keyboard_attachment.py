@@ -72,8 +72,8 @@ class InlineKeyboardAttachment(Attachment):
         :param callback_id: The callback_id of this InlineKeyboardAttachment.  # noqa: E501
         :type: str
         """
-        if callback_id is None:
-            raise ValueError("Invalid value for `callback_id`, must not be `None`")  # noqa: E501
+        # if callback_id is None:
+        #     raise ValueError("Invalid value for `callback_id`, must not be `None`")  # noqa: E501
 
         self._callback_id = callback_id
 
