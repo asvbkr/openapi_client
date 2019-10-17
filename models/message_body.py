@@ -34,33 +34,29 @@ class MessageBody(object):
         'mid': 'str',
         'seq': 'int',
         'text': 'str',
-        'attachments': 'list[Attachment]',
-        'reply_to': 'str'
+        'attachments': 'list[Attachment]'
     }
 
     attribute_map = {
         'mid': 'mid',
         'seq': 'seq',
         'text': 'text',
-        'attachments': 'attachments',
-        'reply_to': 'reply_to'
+        'attachments': 'attachments'
     }
 
-    def __init__(self, mid=None, seq=None, text=None, attachments=None, reply_to=None):  # noqa: E501
+    def __init__(self, mid=None, seq=None, text=None, attachments=None):  # noqa: E501
         """MessageBody - a model defined in OpenAPI"""  # noqa: E501
 
         self._mid = None
         self._seq = None
         self._text = None
         self._attachments = None
-        self._reply_to = None
         self.discriminator = None
 
         self.mid = mid
         self.seq = seq
         self.text = text
         self.attachments = attachments
-        self.reply_to = reply_to
 
     @property
     def mid(self):
@@ -157,29 +153,6 @@ class MessageBody(object):
         """
 
         self._attachments = attachments
-
-    @property
-    def reply_to(self):
-        """Gets the reply_to of this MessageBody.  # noqa: E501
-
-        In case this message is reply to another, it is the unique identifier of the replied message  # noqa: E501
-
-        :return: The reply_to of this MessageBody.  # noqa: E501
-        :rtype: str
-        """
-        return self._reply_to
-
-    @reply_to.setter
-    def reply_to(self, reply_to):
-        """Sets the reply_to of this MessageBody.
-
-        In case this message is reply to another, it is the unique identifier of the replied message  # noqa: E501
-
-        :param reply_to: The reply_to of this MessageBody.  # noqa: E501
-        :type: str
-        """
-
-        self._reply_to = reply_to
 
     def to_dict(self):
         """Returns the model properties as a dict"""
