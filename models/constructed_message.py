@@ -1,7 +1,6 @@
 # coding: utf-8
 
-# flake8: noqa
-
+# noinspection SpellCheckingInspection
 """
     TamTam Bot API
 
@@ -12,114 +11,190 @@
 """
 
 
-from __future__ import absolute_import
+import pprint
 
-__version__ = "1.0.0"
+import six
 
-# import apis into sdk package
-from openapi_client.api.bots_api import BotsApi
-from openapi_client.api.chats_api import ChatsApi
-from openapi_client.api.messages_api import MessagesApi
-from openapi_client.api.subscriptions_api import SubscriptionsApi
-from openapi_client.api.upload_api import UploadApi
 
-# import ApiClient
-from openapi_client.api_client import ApiClient
-from openapi_client.configuration import Configuration
-# import models into sdk package
-from openapi_client.models.action_request_body import ActionRequestBody
-from openapi_client.models.attachment import Attachment
-from openapi_client.models.attachment_payload import AttachmentPayload
-from openapi_client.models.attachment_request import AttachmentRequest
-from openapi_client.models.audio_attachment import AudioAttachment
-from openapi_client.models.audio_attachment_request import AudioAttachmentRequest
-from openapi_client.models.bot_added_to_chat_update import BotAddedToChatUpdate
-from openapi_client.models.bot_command import BotCommand
-from openapi_client.models.bot_info import BotInfo
-from openapi_client.models.bot_patch import BotPatch
-from openapi_client.models.bot_removed_from_chat_update import BotRemovedFromChatUpdate
-from openapi_client.models.bot_started_update import BotStartedUpdate
-from openapi_client.models.button import Button
-from openapi_client.models.callback import Callback
-from openapi_client.models.callback_answer import CallbackAnswer
-from openapi_client.models.callback_button import CallbackButton
-from openapi_client.models.callback_constructor_input import CallbackConstructorInput
-from openapi_client.models.chat import Chat
-from openapi_client.models.chat_admin_permission import ChatAdminPermission
-from openapi_client.models.chat_button import ChatButton
-from openapi_client.models.chat_list import ChatList
-from openapi_client.models.chat_member import ChatMember
-from openapi_client.models.chat_members_list import ChatMembersList
-from openapi_client.models.chat_patch import ChatPatch
-from openapi_client.models.chat_status import ChatStatus
-from openapi_client.models.chat_title_changed_update import ChatTitleChangedUpdate
-from openapi_client.models.chat_type import ChatType
-from openapi_client.models.constructed_message import ConstructedMessage
-from openapi_client.models.constructor_answer import ConstructorAnswer
-from openapi_client.models.constructor_input import ConstructorInput
-from openapi_client.models.contact_attachment import ContactAttachment
-from openapi_client.models.contact_attachment_payload import ContactAttachmentPayload
-from openapi_client.models.contact_attachment_request import ContactAttachmentRequest
-from openapi_client.models.contact_attachment_request_payload import ContactAttachmentRequestPayload
-from openapi_client.models.error import Error
-from openapi_client.models.file_attachment import FileAttachment
-from openapi_client.models.file_attachment_payload import FileAttachmentPayload
-from openapi_client.models.file_attachment_request import FileAttachmentRequest
-from openapi_client.models.get_subscriptions_result import GetSubscriptionsResult
-from openapi_client.models.image import Image
-from openapi_client.models.inline_keyboard_attachment import InlineKeyboardAttachment
-from openapi_client.models.inline_keyboard_attachment_request import InlineKeyboardAttachmentRequest
-from openapi_client.models.inline_keyboard_attachment_request_payload import InlineKeyboardAttachmentRequestPayload
-from openapi_client.models.intent import Intent
-from openapi_client.models.keyboard import Keyboard
-from openapi_client.models.link_button import LinkButton
-from openapi_client.models.linked_message import LinkedMessage
-from openapi_client.models.location_attachment import LocationAttachment
-from openapi_client.models.location_attachment_request import LocationAttachmentRequest
-from openapi_client.models.media_attachment_payload import MediaAttachmentPayload
-from openapi_client.models.message import Message
-from openapi_client.models.message_body import MessageBody
-from openapi_client.models.message_callback_update import MessageCallbackUpdate
-from openapi_client.models.message_chat_created_update import MessageChatCreatedUpdate
-from openapi_client.models.message_constructed_update import MessageConstructedUpdate
-from openapi_client.models.message_construction_request import MessageConstructionRequest
-from openapi_client.models.message_constructor_input import MessageConstructorInput
-from openapi_client.models.message_created_update import MessageCreatedUpdate
-from openapi_client.models.message_edited_update import MessageEditedUpdate
-from openapi_client.models.message_link_type import MessageLinkType
-from openapi_client.models.message_list import MessageList
-from openapi_client.models.message_removed_update import MessageRemovedUpdate
-from openapi_client.models.message_stat import MessageStat
-from openapi_client.models.new_message_body import NewMessageBody
-from openapi_client.models.new_message_link import NewMessageLink
-from openapi_client.models.photo_attachment import PhotoAttachment
-from openapi_client.models.photo_attachment_payload import PhotoAttachmentPayload
-from openapi_client.models.photo_attachment_request import PhotoAttachmentRequest
-from openapi_client.models.photo_attachment_request_payload import PhotoAttachmentRequestPayload
-from openapi_client.models.photo_token import PhotoToken
-from openapi_client.models.photo_tokens import PhotoTokens
-from openapi_client.models.recipient import Recipient
-from openapi_client.models.request_contact_button import RequestContactButton
-from openapi_client.models.request_geo_location_button import RequestGeoLocationButton
-from openapi_client.models.send_message_result import SendMessageResult
-from openapi_client.models.sender_action import SenderAction
-from openapi_client.models.share_attachment import ShareAttachment
-from openapi_client.models.simple_query_result import SimpleQueryResult
-from openapi_client.models.sticker_attachment import StickerAttachment
-from openapi_client.models.sticker_attachment_payload import StickerAttachmentPayload
-from openapi_client.models.sticker_attachment_request import StickerAttachmentRequest
-from openapi_client.models.sticker_attachment_request_payload import StickerAttachmentRequestPayload
-from openapi_client.models.subscription import Subscription
-from openapi_client.models.subscription_request_body import SubscriptionRequestBody
-from openapi_client.models.update import Update
-from openapi_client.models.update_list import UpdateList
-from openapi_client.models.upload_endpoint import UploadEndpoint
-from openapi_client.models.upload_type import UploadType
-from openapi_client.models.uploaded_info import UploadedInfo
-from openapi_client.models.user import User
-from openapi_client.models.user_added_to_chat_update import UserAddedToChatUpdate
-from openapi_client.models.user_ids_list import UserIdsList
-from openapi_client.models.user_removed_from_chat_update import UserRemovedFromChatUpdate
-from openapi_client.models.user_with_photo import UserWithPhoto
-from openapi_client.models.video_attachment import VideoAttachment
-from openapi_client.models.video_attachment_request import VideoAttachmentRequest
+class ConstructedMessage(object):
+    """NOTE: This class is auto generated by OpenAPI Generator.
+    Ref: https://openapi-generator.tech
+
+    Do not edit the class manually.
+    """
+
+    """
+    Attributes:
+      openapi_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    openapi_types = {
+        'sender': 'User',
+        'timestamp': 'int',
+        'link': 'LinkedMessage',
+        'body': 'MessageBody'
+    }
+
+    attribute_map = {
+        'sender': 'sender',
+        'timestamp': 'timestamp',
+        'link': 'link',
+        'body': 'body'
+    }
+
+    def __init__(self, sender=None, timestamp=None, link=None, body=None):  # noqa: E501
+        """ConstructedMessage - a model defined in OpenAPI"""  # noqa: E501
+
+        self._sender = None
+        self._timestamp = None
+        self._link = None
+        self._body = None
+        self.discriminator = None
+
+        self.sender = sender
+        self.timestamp = timestamp
+        self.link = link
+        self.body = body
+
+    @property
+    def sender(self):
+        """Gets the sender of this ConstructedMessage.  # noqa: E501
+
+        User who sent this message  # noqa: E501
+
+        :return: The sender of this ConstructedMessage.  # noqa: E501
+        :rtype: User
+        """
+        return self._sender
+
+    @sender.setter
+    def sender(self, sender):
+        """Sets the sender of this ConstructedMessage.
+
+        User who sent this message  # noqa: E501
+
+        :param sender: The sender of this ConstructedMessage.  # noqa: E501
+        :type: User
+        """
+        if sender is None:
+            raise ValueError("Invalid value for `sender`, must not be `None`")  # noqa: E501
+
+        self._sender = sender
+
+    @property
+    def timestamp(self):
+        """Gets the timestamp of this ConstructedMessage.  # noqa: E501
+
+        Unix-time when message has been created  # noqa: E501
+
+        :return: The timestamp of this ConstructedMessage.  # noqa: E501
+        :rtype: int
+        """
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, timestamp):
+        """Sets the timestamp of this ConstructedMessage.
+
+        Unix-time when message has been created  # noqa: E501
+
+        :param timestamp: The timestamp of this ConstructedMessage.  # noqa: E501
+        :type: int
+        """
+        if timestamp is None:
+            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
+
+        self._timestamp = timestamp
+
+    @property
+    def link(self):
+        """Gets the link of this ConstructedMessage.  # noqa: E501
+
+        Any linked message: forward or reply  # noqa: E501
+
+        :return: The link of this ConstructedMessage.  # noqa: E501
+        :rtype: LinkedMessage
+        """
+        return self._link
+
+    @link.setter
+    def link(self, link):
+        """Sets the link of this ConstructedMessage.
+
+        Any linked message: forward or reply  # noqa: E501
+
+        :param link: The link of this ConstructedMessage.  # noqa: E501
+        :type: LinkedMessage
+        """
+
+        self._link = link
+
+    @property
+    def body(self):
+        """Gets the body of this ConstructedMessage.  # noqa: E501
+
+        Body of created message. Text + attachments  # noqa: E501
+
+        :return: The body of this ConstructedMessage.  # noqa: E501
+        :rtype: MessageBody
+        """
+        return self._body
+
+    @body.setter
+    def body(self, body):
+        """Sets the body of this ConstructedMessage.
+
+        Body of created message. Text + attachments  # noqa: E501
+
+        :param body: The body of this ConstructedMessage.  # noqa: E501
+        :type: MessageBody
+        """
+        if body is None:
+            raise ValueError("Invalid value for `body`, must not be `None`")  # noqa: E501
+
+        self._body = body
+
+    def to_dict(self):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(self.openapi_types):
+            value = getattr(self, attr)
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+
+        return result
+
+    def to_str(self):
+        """Returns the string representation of the model"""
+        return pprint.pformat(self.to_dict())
+
+    def __repr__(self):
+        """For `print` and `pprint`"""
+        return self.to_str()
+
+    def __eq__(self, other):
+        """Returns true if both objects are equal"""
+        if not isinstance(other, ConstructedMessage):
+            return False
+
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        """Returns true if both objects are not equal"""
+        return not self == other
