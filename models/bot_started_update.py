@@ -35,7 +35,8 @@ class BotStartedUpdate(Update):
         'timestamp': 'int',
         'chat_id': 'int',
         'user': 'User',
-        'payload': 'str'
+        'payload': 'str',
+        'user_locale': 'str'
     }
 
     attribute_map = {
@@ -43,20 +44,24 @@ class BotStartedUpdate(Update):
         'timestamp': 'timestamp',
         'chat_id': 'chat_id',
         'user': 'user',
-        'payload': 'payload'
+        'payload': 'payload',
+        'user_locale': 'user_locale'
     }
 
-    def __init__(self, timestamp=None, chat_id=None, user=None, payload=None, update_type='bot_started'):  # noqa: E501
+    def __init__(self, timestamp=None, chat_id=None, user=None, payload=None, user_locale=None, update_type='bot_started'):  # noqa: E501
         """BotStartedUpdate - a model defined in OpenAPI"""  # noqa: E501
         super(BotStartedUpdate, self).__init__(update_type, timestamp)
         self._chat_id = None
         self._user = None
         self._payload = None
+        self._user_locale = None
         self.discriminator = None
 
         self.chat_id = chat_id
         self.user = user
         self.payload = payload
+        if user_locale is not None:
+            self.user_locale = user_locale
 
     @property
     def chat_id(self):
@@ -132,6 +137,29 @@ class BotStartedUpdate(Update):
             raise ValueError("Invalid value for `payload`, length must be less than or equal to `512`")  # noqa: E501
 
         self._payload = payload
+
+    @property
+    def user_locale(self):
+        """Gets the user_locale of this BotStartedUpdate.  # noqa: E501
+
+        Current user locale in IETF BCP 47 format  # noqa: E501
+
+        :return: The user_locale of this BotStartedUpdate.  # noqa: E501
+        :rtype: str
+        """
+        return self._user_locale
+
+    @user_locale.setter
+    def user_locale(self, user_locale):
+        """Sets the user_locale of this BotStartedUpdate.
+
+        Current user locale in IETF BCP 47 format  # noqa: E501
+
+        :param user_locale: The user_locale of this BotStartedUpdate.  # noqa: E501
+        :type: str
+        """
+
+        self._user_locale = user_locale
 
     def to_dict(self):
         """Returns the model properties as a dict"""

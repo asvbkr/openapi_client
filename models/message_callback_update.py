@@ -34,25 +34,29 @@ class MessageCallbackUpdate(Update):
         'update_type': 'str',
         'timestamp': 'int',
         'callback': 'Callback',
-        'message': 'Message'
+        'message': 'Message',
+        'user_locale': 'str'
     }
 
     attribute_map = {
         'update_type': 'update_type',
         'timestamp': 'timestamp',
         'callback': 'callback',
-        'message': 'message'
+        'message': 'message',
+        'user_locale': 'user_locale'
     }
 
-    def __init__(self, timestamp=None, callback=None, message=None, update_type='message_callback'):  # noqa: E501
+    def __init__(self, timestamp=None, callback=None, message=None, user_locale=None, update_type='message_callback'):  # noqa: E501
         """MessageCallbackUpdate - a model defined in OpenAPI"""  # noqa: E501
         super(MessageCallbackUpdate, self).__init__(update_type, timestamp)
         self._callback = None
         self._message = None
+        self._user_locale = None
         self.discriminator = None
 
         self.callback = callback
         self.message = message
+        self.user_locale = user_locale
 
     @property
     def callback(self):
@@ -99,6 +103,29 @@ class MessageCallbackUpdate(Update):
         """
 
         self._message = message
+
+    @property
+    def user_locale(self):
+        """Gets the user_locale of this MessageCallbackUpdate.  # noqa: E501
+
+        Current user locale in IETF BCP 47 format  # noqa: E501
+
+        :return: The user_locale of this MessageCallbackUpdate.  # noqa: E501
+        :rtype: str
+        """
+        return self._user_locale
+
+    @user_locale.setter
+    def user_locale(self, user_locale):
+        """Sets the user_locale of this MessageCallbackUpdate.
+
+        Current user locale in IETF BCP 47 format  # noqa: E501
+
+        :param user_locale: The user_locale of this MessageCallbackUpdate.  # noqa: E501
+        :type: str
+        """
+
+        self._user_locale = user_locale
 
     def to_dict(self):
         """Returns the model properties as a dict"""

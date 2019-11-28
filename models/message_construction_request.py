@@ -98,11 +98,11 @@ class MessageConstructionRequest(Update):
     def user_locale(self):
         """Gets the user_locale of this MessageConstructionRequest.  # noqa: E501
 
-                Current user locale in IETF BCP 47 format  # noqa: E501
+        Current user locale in IETF BCP 47 format  # noqa: E501
 
-                :return: The user_locale of this MessageConstructionRequest.  # noqa: E501
-                :rtype: str
-                """
+        :return: The user_locale of this MessageConstructionRequest.  # noqa: E501
+        :rtype: str
+        """
         return self._user_locale
 
     @user_locale.setter
@@ -162,8 +162,8 @@ class MessageConstructionRequest(Update):
         :param data: The data of this MessageConstructionRequest.  # noqa: E501
         :type: str
         """
-        if data is not None and len(data) > 4096:
-            raise ValueError("Invalid value for `data`, length must be less than or equal to `4096`")  # noqa: E501
+        if data is not None and len(data) > 8192:
+            raise ValueError("Invalid value for `data`, length must be less than or equal to `8192`")  # noqa: E501
 
         self._data = data
 
