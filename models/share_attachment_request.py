@@ -40,7 +40,7 @@ class ShareAttachmentRequest(AttachmentRequest):
         'payload': 'payload'
     }
 
-    def __init__(self, payload=None, type='sticker'):  # noqa: E501
+    def __init__(self, payload=None, type='share'):  # noqa: E501
         """ShareAttachmentRequest - a model defined in OpenAPI"""  # noqa: E501
         super(ShareAttachmentRequest, self).__init__(type)
         self._payload = None
