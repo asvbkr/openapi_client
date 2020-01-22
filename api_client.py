@@ -257,36 +257,39 @@ class ApiClient(object):
 
         :return: object.
         """
-        if data is None:
-            return None
+        try:
+            if data is None:
+                return None
 
-        if type(klass) == str:
-            if klass.startswith('list['):
-                sub_kls = re.match(r'list\[(.*)\]', klass).group(1)
-                return [self.__deserialize(sub_data, sub_kls)
-                        for sub_data in data]
+            if type(klass) == str:
+                if klass.startswith('list['):
+                    sub_kls = re.match(r'list\[(.*)\]', klass).group(1)
+                    return [self.__deserialize(sub_data, sub_kls)
+                            for sub_data in data]
 
-            if klass.startswith('dict('):
-                sub_kls = re.match(r'dict\(([^,]*), (.*)\)', klass).group(2)
-                return {k: self.__deserialize(v, sub_kls)
-                        for k, v in six.iteritems(data)}
+                if klass.startswith('dict('):
+                    sub_kls = re.match(r'dict\(([^,]*), (.*)\)', klass).group(2)
+                    return {k: self.__deserialize(v, sub_kls)
+                            for k, v in six.iteritems(data)}
 
-            # convert str to class
-            if klass in self.NATIVE_TYPES_MAPPING:
-                klass = self.NATIVE_TYPES_MAPPING[klass]
+                # convert str to class
+                if klass in self.NATIVE_TYPES_MAPPING:
+                    klass = self.NATIVE_TYPES_MAPPING[klass]
+                else:
+                    klass = getattr(openapi_client.models, klass)
+
+            if klass in self.PRIMITIVE_TYPES:
+                return self.__deserialize_primitive(data, klass)
+            elif klass == object:
+                return self.__deserialize_object(data)
+            elif klass == datetime.date:
+                return self.__deserialize_date(data)
+            elif klass == datetime.datetime:
+                return self.__deserialize_datatime(data)
             else:
-                klass = getattr(openapi_client.models, klass)
-
-        if klass in self.PRIMITIVE_TYPES:
-            return self.__deserialize_primitive(data, klass)
-        elif klass == object:
-            return self.__deserialize_object(data)
-        elif klass == datetime.date:
-            return self.__deserialize_date(data)
-        elif klass == datetime.datetime:
-            return self.__deserialize_datatime(data)
-        else:
-            return self.__deserialize_model(data, klass)
+                return self.__deserialize_model(data, klass)
+        except ValueError as e:
+            raise ValueError(data, e)
 
     def call_api(self, resource_path, method,
                  path_params=None, query_params=None, header_params=None,
@@ -339,13 +342,13 @@ class ApiClient(object):
                                    _preload_content, _request_timeout)
         else:
             thread = self.pool.apply_async(self.__call_api, (resource_path,
-                                           method, path_params, query_params,
-                                           header_params, body,
-                                           post_params, files,
-                                           response_type, auth_settings,
-                                           _return_http_data_only,
-                                           collection_formats,
-                                           _preload_content, _request_timeout))
+                                                             method, path_params, query_params,
+                                                             header_params, body,
+                                                             post_params, files,
+                                                             response_type, auth_settings,
+                                                             _return_http_data_only,
+                                                             collection_formats,
+                                                             _preload_content, _request_timeout))
         return thread
 
     def request(self, method, url, query_params=None, headers=None,
@@ -604,7 +607,7 @@ class ApiClient(object):
                 status=0,
                 reason=(
                     "Failed to parse `{0}` as datetime object"
-                    .format(string)
+                        .format(string)
                 )
             )
 
