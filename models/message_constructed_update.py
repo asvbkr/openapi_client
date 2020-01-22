@@ -75,8 +75,8 @@ class MessageConstructedUpdate(Update):
         :param session_id: The session_id of this MessageConstructedUpdate.  # noqa: E501
         :type: str
         """
-        if session_id is None:
-            raise ValueError("Invalid value for `session_id`, must not be `None`")  # noqa: E501
+        # if session_id is None:
+        #     raise ValueError("Invalid value for `session_id`, must not be `None`")  # noqa: E501
 
         self._session_id = session_id
 
