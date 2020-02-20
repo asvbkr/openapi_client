@@ -99,8 +99,9 @@ class User(object):
         :param name: The name of this User.  # noqa: E501
         :type: str
         """
-        if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+        # Может быть пустым для некторых случаев - https://tt.me/tt_it/AXBjtZR1Cg0
+        # if name is None:
+        #     raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
