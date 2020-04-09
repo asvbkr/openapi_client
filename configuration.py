@@ -19,6 +19,7 @@ import sys
 import urllib3
 
 import six
+# noinspection PyUnresolvedReferences
 from six.moves import http_client as httplib
 
 
