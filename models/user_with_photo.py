@@ -37,6 +37,7 @@ class UserWithPhoto(User):
         'name': 'str',
         'username': 'str',
         'is_bot': 'bool',
+        'last_activity_time': int,
         'avatar_url': 'str',
         'full_avatar_url': 'str',
     }
@@ -47,14 +48,15 @@ class UserWithPhoto(User):
         'name': 'name',
         'username': 'username',
         'is_bot': 'is_bot',
+        'last_activity_time': 'last_activity_time',
         'avatar_url': 'avatar_url',
         'full_avatar_url': 'full_avatar_url',
     }
 
-    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, avatar_url=None, full_avatar_url=None):  # noqa: E501
+    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, last_activity_time=None, avatar_url=None, full_avatar_url=None):  # noqa: E501
         """UserWithPhoto - a model defined in OpenAPI"""  # noqa: E501
 
-        super(UserWithPhoto, self).__init__(user_id, name, username, is_bot)
+        super(UserWithPhoto, self).__init__(user_id, name, username, is_bot, last_activity_time)
         self._description = None		
         self._avatar_url = None
         self._full_avatar_url = None

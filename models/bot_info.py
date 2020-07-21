@@ -36,6 +36,7 @@ class BotInfo(UserWithPhoto):
         'name': 'str',
         'username': 'str',
         'is_bot': 'bool',
+        'last_activity_time': int,
         'avatar_url': 'str',
         'full_avatar_url': 'str',
         'commands': 'list[BotCommand]'
@@ -47,15 +48,16 @@ class BotInfo(UserWithPhoto):
         'name': 'name',
         'username': 'username',
         'is_bot': 'is_bot',
+        'last_activity_time': 'last_activity_time',
         'avatar_url': 'avatar_url',
         'full_avatar_url': 'full_avatar_url',
         'commands': 'commands'
     }
 
-    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, avatar_url=None, full_avatar_url=None, commands=None):  # noqa: E501
+    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, last_activity_time=None, avatar_url=None, full_avatar_url=None, commands=None):  # noqa: E501
         """BotInfo - a model defined in OpenAPI"""  # noqa: E501
 
-        super(BotInfo, self).__init__(description, user_id, name, username, is_bot, avatar_url, full_avatar_url)
+        super(BotInfo, self).__init__(description, user_id, name, username, is_bot, last_activity_time, avatar_url, full_avatar_url)
         self._commands = None
         self.discriminator = None
 

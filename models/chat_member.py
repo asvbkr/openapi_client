@@ -37,6 +37,7 @@ class ChatMember(UserWithPhoto):
         'name': 'str',
         'username': 'str',
         'is_bot': 'bool',
+        'last_activity_time': int,
         'avatar_url': 'str',
         'full_avatar_url': 'str',
         'last_access_time': 'int',
@@ -52,6 +53,7 @@ class ChatMember(UserWithPhoto):
         'name': 'name',
         'username': 'username',
         'is_bot': 'is_bot',
+        'last_activity_time': 'last_activity_time',
         'avatar_url': 'avatar_url',
         'full_avatar_url': 'full_avatar_url',
         'last_access_time': 'last_access_time',
@@ -61,11 +63,11 @@ class ChatMember(UserWithPhoto):
         'permissions': 'permissions'
     }
 
-    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, avatar_url=None, full_avatar_url=None, last_access_time=None, is_owner=None, is_admin=None, join_time=None,
+    def __init__(self, description=None, user_id=None, name=None, username=None, is_bot=None, last_activity_time=None, avatar_url=None, full_avatar_url=None, last_access_time=None, is_owner=None, is_admin=None, join_time=None,
                  permissions=None):  # noqa: E501
         """ChatMember - a model defined in OpenAPI"""  # noqa: E501
 
-        super(ChatMember, self).__init__(description, user_id, name, username, is_bot, avatar_url, full_avatar_url)
+        super(ChatMember, self).__init__(description, user_id, name, username, is_bot, last_activity_time, avatar_url, full_avatar_url)
         self._last_access_time = None
         self._is_owner = None
         self._is_admin = None
