@@ -67,6 +67,8 @@ from openapi_client.models.file_attachment_payload import FileAttachmentPayload
 from openapi_client.models.file_attachment_request import FileAttachmentRequest
 from openapi_client.models.get_pinned_message_result import GetPinnedMessageResult
 from openapi_client.models.get_subscriptions_result import GetSubscriptionsResult
+from openapi_client.models.heading_markup import HeadingMarkup
+from openapi_client.models.highlighted_markup import HighlightedMarkup
 from openapi_client.models.image import Image
 from openapi_client.models.inline_keyboard_attachment import InlineKeyboardAttachment
 from openapi_client.models.inline_keyboard_attachment_request import InlineKeyboardAttachmentRequest
