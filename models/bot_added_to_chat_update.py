@@ -34,25 +34,29 @@ class BotAddedToChatUpdate(Update):
         'update_type': 'str',
         'timestamp': 'int',
         'chat_id': 'int',
-        'user': 'User'
+        'user': 'User',
+        'is_channel': 'bool'
     }
 
     attribute_map = {
         'update_type': 'update_type',
         'timestamp': 'timestamp',
         'chat_id': 'chat_id',
-        'user': 'user'
+        'user': 'user',
+        'is_channel': 'is_channel'
     }
 
-    def __init__(self, timestamp=None, chat_id=None, user=None, update_type='bot_added'):  # noqa: E501
+    def __init__(self, timestamp=None, chat_id=None, user=None, is_channel=None, update_type='bot_added'):  # noqa: E501
         """BotAddedToChatUpdate - a model defined in OpenAPI"""  # noqa: E501
         super(BotAddedToChatUpdate, self).__init__(update_type, timestamp)
         self._chat_id = None
         self._user = None
+        self._is_channel = None
         self.discriminator = None
 
         self.chat_id = chat_id
         self.user = user
+        self.is_channel = is_channel
 
     @property
     def chat_id(self):
@@ -103,6 +107,31 @@ class BotAddedToChatUpdate(Update):
             raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
 
         self._user = user
+
+    @property
+    def is_channel(self):
+        """Gets the is_channel of this BotAddedToChatUpdate.  # noqa: E501
+
+        Indicates whether bot has been added to channel or not  # noqa: E501
+
+        :return: The is_channel of this BotAddedToChatUpdate.  # noqa: E501
+        :rtype: bool
+        """
+        return self._is_channel
+
+    @is_channel.setter
+    def is_channel(self, is_channel):
+        """Sets the is_channel of this BotAddedToChatUpdate.
+
+        Indicates whether bot has been added to channel or not  # noqa: E501
+
+        :param is_channel: The is_channel of this BotAddedToChatUpdate.  # noqa: E501
+        :type: bool
+        """
+        if is_channel is None:
+            raise ValueError("Invalid value for `is_channel`, must not be `None`")  # noqa: E501
+
+        self._is_channel = is_channel
 
     def to_dict(self):
         """Returns the model properties as a dict"""

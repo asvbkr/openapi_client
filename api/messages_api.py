@@ -97,6 +97,11 @@ class MessagesApi(object):
                 local_var_params['callback_answer'] is None):
             raise ValueError("Missing the required parameter `callback_answer` when calling `answer_on_callback`")  # noqa: E501
 
+        if ('callback_id' in local_var_params and
+                len(local_var_params['callback_id']) < 1):
+            raise ValueError("Invalid value for parameter `callback_id` when calling `answer_on_callback`, length must be greater than or equal to `1`")  # noqa: E501
+        if 'callback_id' in local_var_params and not re.search(r'^(?!\\s*$).+', local_var_params['callback_id']):  # noqa: E501
+            raise ValueError("Invalid value for parameter `callback_id` when calling `answer_on_callback`, must conform to the pattern `/^(?!\\s*$).+/`")  # noqa: E501
         collection_formats = {}
 
         path_params = {}

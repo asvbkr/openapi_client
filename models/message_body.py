@@ -34,29 +34,33 @@ class MessageBody(object):
         'mid': 'str',
         'seq': 'int',
         'text': 'str',
-        'attachments': 'list[Attachment]'
+        'attachments': 'list[Attachment]',
+        'markup': 'list[MarkupElement]'
     }
 
     attribute_map = {
         'mid': 'mid',
         'seq': 'seq',
         'text': 'text',
-        'attachments': 'attachments'
+        'attachments': 'attachments',
+        'markup': 'markup'
     }
 
-    def __init__(self, mid=None, seq=None, text=None, attachments=None):  # noqa: E501
+    def __init__(self, mid=None, seq=None, text=None, attachments=None, markup=None):  # noqa: E501
         """MessageBody - a model defined in OpenAPI"""  # noqa: E501
 
         self._mid = None
         self._seq = None
         self._text = None
         self._attachments = None
+        self._markup = None
         self.discriminator = None
 
         self.mid = mid
         self.seq = seq
         self.text = text
         self.attachments = attachments
+        self.markup = markup
 
     @property
     def mid(self):
@@ -153,6 +157,29 @@ class MessageBody(object):
         """
 
         self._attachments = attachments
+
+    @property
+    def markup(self):
+        """Gets the markup of this MessageBody.  # noqa: E501
+
+        Message text markup. See [Formatting](#section/About/Text-formatting) section for more info  # noqa: E501
+
+        :return: The markup of this MessageBody.  # noqa: E501
+        :rtype: list[MarkupElement]
+        """
+        return self._markup
+
+    @markup.setter
+    def markup(self, markup):
+        """Sets the markup of this MessageBody.
+
+        Message text markup. See [Formatting](#section/About/Text-formatting) section for more info  # noqa: E501
+
+        :param markup: The markup of this MessageBody.  # noqa: E501
+        :type: list[MarkupElement]
+        """
+
+        self._markup = markup
 
     def to_dict(self):
         """Returns the model properties as a dict"""

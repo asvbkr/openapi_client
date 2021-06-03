@@ -105,6 +105,8 @@ class Button(object):
             raise ValueError("Invalid value for `text`, must not be `None`")  # noqa: E501
         if text is not None and len(text) > self.MAX_TEXT_LENGTH:
             raise ValueError("Invalid value for `text`, length must be less than or equal to `%s`" % self.MAX_TEXT_LENGTH)  # noqa: E501
+        if text is not None and len(text) < 1:
+            raise ValueError("Invalid value for `text`, length must be greater than or equal to `1`")  # noqa: E501
 
         self._text = text
 

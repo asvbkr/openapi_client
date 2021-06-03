@@ -35,7 +35,8 @@ class UserRemovedFromChatUpdate(Update):
         'timestamp': 'int',
         'chat_id': 'int',
         'user': 'User',
-        'admin_id': 'int'
+        'admin_id': 'int',
+        'is_channel': 'bool'
     }
 
     attribute_map = {
@@ -43,21 +44,24 @@ class UserRemovedFromChatUpdate(Update):
         'timestamp': 'timestamp',
         'chat_id': 'chat_id',
         'user': 'user',
-        'admin_id': 'admin_id'
+        'admin_id': 'admin_id',
+        'is_channel': 'is_channel'
     }
 
-    def __init__(self, timestamp=None, chat_id=None, user=None, admin_id=None, update_type='user_removed'):  # noqa: E501
+    def __init__(self, timestamp=None, chat_id=None, user=None, admin_id=None, is_channel=None, update_type='user_removed'):  # noqa: E501
         """UserRemovedFromChatUpdate - a model defined in OpenAPI"""  # noqa: E501
         super(UserRemovedFromChatUpdate, self).__init__(update_type, timestamp)
         self._chat_id = None
         self._user = None
         self._admin_id = None
+        self._is_channel = None
         self.discriminator = None
 
         self.chat_id = chat_id
         self.user = user
         if admin_id is not None:
             self.admin_id = admin_id
+        self.is_channel = is_channel
 
     @property
     def chat_id(self):
@@ -131,6 +135,31 @@ class UserRemovedFromChatUpdate(Update):
         """
 
         self._admin_id = admin_id
+
+    @property
+    def is_channel(self):
+        """Gets the is_channel of this UserRemovedFromChatUpdate.  # noqa: E501
+
+        Indicates whether user has been removed from channel or not  # noqa: E501
+
+        :return: The is_channel of this UserRemovedFromChatUpdate.  # noqa: E501
+        :rtype: bool
+        """
+        return self._is_channel
+
+    @is_channel.setter
+    def is_channel(self, is_channel):
+        """Sets the is_channel of this UserRemovedFromChatUpdate.
+
+        Indicates whether user has been removed from channel or not  # noqa: E501
+
+        :param is_channel: The is_channel of this UserRemovedFromChatUpdate.  # noqa: E501
+        :type: bool
+        """
+        if is_channel is None:
+            raise ValueError("Invalid value for `is_channel`, must not be `None`")  # noqa: E501
+
+        self._is_channel = is_channel
 
     def to_dict(self):
         """Returns the model properties as a dict"""

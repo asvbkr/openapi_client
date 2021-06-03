@@ -33,7 +33,7 @@ class MessageConstructorInput(ConstructorInput):
     """
     openapi_types = {
         'input_type': 'str',
-        'messages': 'list[NewMessageBody]'
+        'messages': 'list[ConstructedMessageBody]'
     }
 
     attribute_map = {
@@ -56,7 +56,7 @@ class MessageConstructorInput(ConstructorInput):
         Messages sent by user during construction process. Typically it is single element array but sometimes it can contains multiple messages. Can be empty on initial request when user just opened constructor  # noqa: E501
 
         :return: The messages of this MessageConstructorInput.  # noqa: E501
-        :rtype: list[NewMessageBody]
+        :rtype: list[ConstructedMessageBody]
         """
         return self._messages
 
@@ -67,7 +67,7 @@ class MessageConstructorInput(ConstructorInput):
         Messages sent by user during construction process. Typically it is single element array but sometimes it can contains multiple messages. Can be empty on initial request when user just opened constructor  # noqa: E501
 
         :param messages: The messages of this MessageConstructorInput.  # noqa: E501
-        :type: list[NewMessageBody]
+        :type: list[ConstructedMessageBody]
         """
 
         self._messages = messages
