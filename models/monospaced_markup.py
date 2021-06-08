@@ -17,6 +17,8 @@ import six
 
 from .markup_element import MarkupElement
 
+from .text_format import TextFormat
+
 
 # noinspection PyShadowingBuiltins
 class MonospacedMarkup(MarkupElement):
@@ -49,6 +51,13 @@ class MonospacedMarkup(MarkupElement):
         """MonospacedMarkup - a model defined in OpenAPI"""  # noqa: E501
         super(MonospacedMarkup, self).__init__(type, _from, length)
         self.discriminator = None
+
+    def markup_apply(self, text, format):
+        # type: (str, TextFormat) -> str
+        if format == TextFormat.HTML:
+            return f'<code>{text}</code>'
+        else:
+            return f'```{text}```'
 
     def to_dict(self):
         """Returns the model properties as a dict"""
@@ -92,3 +101,6 @@ class MonospacedMarkup(MarkupElement):
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
         return not self == other
+
+    def __hash__(self):
+        return super().__hash__()

@@ -17,6 +17,8 @@ import six
 
 from .markup_element import MarkupElement
 
+from .text_format import TextFormat
+
 
 # noinspection PyShadowingBuiltins
 class UserMentionMarkup(MarkupElement):
@@ -105,6 +107,13 @@ class UserMentionMarkup(MarkupElement):
 
         self._user_id = user_id
 
+    def markup_apply(self, text, format):
+        # type: (str, TextFormat) -> str
+        if format == TextFormat.HTML:
+            return f'<a href="tamtam://user/{self.user_id}">{text}</a>'
+        else:
+            return f'[{text}](tamtam://user/{self.user_id})'
+
     def to_dict(self):
         """Returns the model properties as a dict"""
         result = {}
@@ -147,3 +156,6 @@ class UserMentionMarkup(MarkupElement):
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
         return not self == other
+
+    def __hash__(self):
+        return super().__hash__()

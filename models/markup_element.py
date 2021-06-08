@@ -12,8 +12,13 @@
 
 import pprint
 import re  # noqa: F401
+import sys
 
 import six
+
+
+from .text_format import TextFormat
+from ..utl import OacUtils
 
 
 # noinspection PyShadowingBuiltins
@@ -66,6 +71,8 @@ class MarkupElement(object):
         self.type = type
         self._from = _from
         self.length = length
+
+        self._id_attrs = (self.type, self._from, self.length)
 
     @property
     def type(self):
@@ -142,6 +149,115 @@ class MarkupElement(object):
 
         self._length = length
 
+    def markup_apply(self, text, format):
+        # type: (str, TextFormat) -> str
+        return text
+
+    # noinspection PyProtectedMember
+    @classmethod
+    def get_markup_text(cls, text, markup):
+        # type: (str, MarkupElement) -> str
+        if not text:
+            raise RuntimeError("This Message has no 'text'.")
+
+        # Is it a narrow build, if so we don't need to convert
+        if sys.maxunicode == 0xFFFF:
+            return text[markup._from: markup._from + markup.length]
+
+        entity_text = text.encode('utf-16-le')
+        entity_text = entity_text[markup._from * 2: (markup._from + markup.length) * 2]
+        return entity_text.decode('utf-16-le')
+
+    @classmethod
+    def parse_markups(cls, text, markups, types=None):
+        # type: (str, [MarkupElement], [str]) -> {MarkupElement, str}
+        if types is None:
+            types = MarkupElement.discriminator_value_class_map.keys()
+
+        return {
+            entity: cls.get_markup_text(text, entity)
+            for entity in (markups or [])
+            if entity.type in types
+        }
+
+    # noinspection PyProtectedMember,SpellCheckingInspection
+    @classmethod
+    def get_formated_markup_text(
+            cls,
+            message_text,
+            markups,
+            format,
+            # urled: bool = False,
+            _from=0,
+    ):
+        # type: (str, [MarkupElement], TextFormat, int) -> {MarkupElement, str}
+        if message_text is None:
+            return ''
+
+        if sys.maxunicode != 0xFFFF:
+            message_text = message_text.encode('utf-16-le')  # type: ignore
+
+        formated_text = ''
+        last__from = 0
+
+        sorted_markups = sorted(markups.items(), key=(lambda item: item[0]._from))
+        parsed_markups = []
+
+        for (markup, text) in sorted_markups:
+            assert isinstance(markup, MarkupElement)
+            if markup not in parsed_markups:
+                nested_markups = {
+                    e: t
+                    for (e, t) in sorted_markups
+                    if (e._from >= markup._from
+                        and e._from + e.length <= markup._from + markup.length
+                        and e != markup)
+                }
+                parsed_markups.extend(list(nested_markups.keys()))
+
+                orig_text = text
+                text = OacUtils.escape(text)
+
+                if nested_markups:
+                    text = cls.get_formated_markup_text(
+                        orig_text, nested_markups,
+                        format,
+                        # urled=urled,
+                        _from=markup._from,
+                    )
+
+                insert = markup.markup_apply(text, format)
+
+                if _from == 0:
+                    if sys.maxunicode == 0xFFFF:
+                        formated_text += (OacUtils.escape(message_text[last__from: markup._from - _from]) + insert)
+                    else:
+                        formated_text += (OacUtils.escape(message_text[last__from * 2: (markup._from - _from) * 2].decode('utf-16-le')) + insert)
+                else:
+                    if sys.maxunicode == 0xFFFF:
+                        formated_text += message_text[last__from: markup._from - _from] + insert
+                    else:
+                        formated_text += (
+                                message_text[last__from * 2: (markup._from - _from) * 2].decode('utf-16-le') + insert
+                        )
+
+                last__from = markup._from - _from + markup.length
+
+        if _from == 0:
+            if sys.maxunicode == 0xFFFF:
+                formated_text += OacUtils.escape(message_text[last__from:])
+            else:
+                formated_text += OacUtils.escape(
+                    message_text[last__from * 2:].decode('utf-16-le')  # type: ignore
+                )
+        else:
+            if sys.maxunicode == 0xFFFF:
+                formated_text += message_text[last__from:]
+            else:
+                formated_text += message_text[last__from * 2:].decode('utf-16-le')  # type: ignore
+
+        return formated_text
+
     def get_real_child_model(self, data):
         """Returns the real base class specified by the discriminator"""
         if self.discriminator:
@@ -190,3 +306,8 @@ class MarkupElement(object):
     def __ne__(self, other):
         """Returns true if both objects are not equal"""
         return not self == other
+
+    def __hash__(self):
+        if self._id_attrs:
+            return hash((self.__class__, self._id_attrs))
+        return super().__hash__()
