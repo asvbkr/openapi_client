@@ -157,16 +157,18 @@ class MarkupElement(object):
     @classmethod
     def get_markup_text(cls, text, markup):
         # type: (str, MarkupElement) -> str
-        if not text:
-            raise RuntimeError("This Message has no 'text'.")
-
-        # Is it a narrow build, if so we don't need to convert
-        if sys.maxunicode == 0xFFFF:
-            return text[markup._from: markup._from + markup.length]
-
-        entity_text = text.encode('utf-16-le')
-        entity_text = entity_text[markup._from * 2: (markup._from + markup.length) * 2]
-        return entity_text.decode('utf-16-le')
+        res = ''
+        if text:
+            if sys.maxunicode != 0xFFFF:
+                try:
+                    entity_text = text.encode('utf-16-le')
+                    entity_text = entity_text[markup._from * 2: (markup._from + markup.length) * 2]
+                    res = entity_text.decode('utf-16-le')
+                except Exception as e:
+                    print(e)
+            if not res:
+                res = text[markup._from: markup._from + markup.length]
+        return res
 
     @classmethod
     def parse_markups(cls, text, markups, types=None):
